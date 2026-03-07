@@ -1,4 +1,4 @@
-package conexao;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ public class Conexao {
     
     private static Connection conn;
 
-    public static Connection getConexao() {
+    public static Connection getConnection() {
 
         try {
 
