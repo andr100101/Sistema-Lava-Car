@@ -42,6 +42,9 @@ CREATE TABLE ITEMOS(
     CONSTRAINT PK_ItemOS PRIMARY KEY(idItemOS)
 );
 
+ALTER TABLE ITEMOS ADD COLUMN valorCobrado DECIMAL(8,2) NOT NULL;
+
+
 CREATE TABLE SERVICO(
 	idServico INT AUTO_INCREMENT,
     Nome VARCHAR(100) NOT NULL,
@@ -136,3 +139,13 @@ $
 
 
 DELIMITER ;
+
+---- Lava Car
+
+F1 - Cadastros
+F2 - Histórico de Serviços
+F3 - Estátisticas
+
+F8 - Ajuda
+F9 - Sair
+

@@ -8,11 +8,7 @@ public class OrdemDeServico {
 	private int statusOS;
 	private Date dataCadastro;
 	
-	public OrdemDeServico(int idOrdemServico, int idCarro, int statusOS, Date dataCadastro) {
-		this.idOrdemServico = idOrdemServico;
-		this.idCarro = idCarro;
-		this.statusOS = statusOS;
-		this.dataCadastro = dataCadastro;
+	public OrdemDeServico() {
 	}
 
 	public int getIdOrdemServico() {
@@ -30,6 +26,24 @@ public class OrdemDeServico {
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
+
+	public void setIdOrdemServico(int idOrdemServico) {
+		this.idOrdemServico = idOrdemServico;
+	}
+
+	public void setIdCarro(int idCarro) {
+		this.idCarro = idCarro;
+	}
+
+	public void setStatusOS(int statusOS) {
+		this.statusOS = statusOS;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+	
+	
 	
 	
 	

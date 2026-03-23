@@ -5,10 +5,7 @@ public class Modelo {
 	private int idMarca;
 	private String nome;
 	
-	public Modelo(int idModelo,String nome, int idMarca) {
-		this.idModelo = idModelo;
-		this.nome = nome;
-		this.idMarca = idMarca;
+	public Modelo() {
 	}
 	
 	public int getIdModelo() {
@@ -17,6 +14,14 @@ public class Modelo {
 	
 	public String getNome() {
 		return nome;
+	}
+	
+	public void setIdModelo(int idModelo) {
+		this.idModelo = idModelo;
+	}
+	
+	public void setIdMarca(int idMarca) {
+		this.idMarca = idMarca;
 	}
 
 	public void setNome(String nome) {

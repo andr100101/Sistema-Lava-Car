@@ -8,10 +8,8 @@ public class Servico {
 	private BigDecimal valor;
 	
 	
-	public Servico(int idServico, String nome, BigDecimal valor) {
-		this.idServico = idServico;
-		Nome = nome;
-		this.valor = valor;
+	public Servico() {
+
 	}
 
 
@@ -28,6 +26,22 @@ public class Servico {
 	public BigDecimal getValor() {
 		return valor;
 	}
+
+
+	public void setIdServico(int idServico) {
+		this.idServico = idServico;
+	}
+
+
+	public void setNome(String nome) {
+		Nome = nome;
+	}
+
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+	
 	
 	
 	

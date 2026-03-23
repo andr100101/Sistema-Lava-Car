@@ -1,14 +1,14 @@
 package models;
 
+import java.math.BigDecimal;
+
 public class ItemOS {
 	private int idItemOS;
 	private int idOrdemDeServico;
 	private int idServico;
+	private BigDecimal valorCobrado;
 	
-	public ItemOS(int idItemOS, int idOrdemDeServico, int idServico) {
-		this.idItemOS = idItemOS;
-		this.idOrdemDeServico = idOrdemDeServico;
-		this.idServico = idServico;
+	public ItemOS() {
 	}
 
 	public int getIdItemOS() {
@@ -23,5 +23,28 @@ public class ItemOS {
 		return idServico;
 	}
 
+	public void setIdItemOS(int idItemOS) {
+		this.idItemOS = idItemOS;
+	}
+
+	public void setIdOrdemDeServico(int idOrdemDeServico) {
+		this.idOrdemDeServico = idOrdemDeServico;
+	}
+
+	public void setIdServico(int idServico) {
+		this.idServico = idServico;
+	}
+
+	public BigDecimal getValorCobrado() {
+		return valorCobrado;
+	}
+
+	public void setValorCobrado(BigDecimal valorCobrado) {
+		this.valorCobrado = valorCobrado;
+	}
+
+	
+	
+	
 	
 }

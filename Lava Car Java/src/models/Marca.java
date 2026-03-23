@@ -5,16 +5,25 @@ public class Marca {
     private int idMarca;
     private String nome;
 
-    public Marca(int idMarca, String nome) {
-        this.idMarca = idMarca;
-    	this.nome = nome;
+    public Marca() {
     }
 
-    public int getId() {
+    public int getIdMarca() {
         return idMarca;
     }
 
     public String getNome() {
         return nome;
     }
+
+	public void setIdMarca(int idMarca) {
+		this.idMarca = idMarca;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+    
+    
 }
+

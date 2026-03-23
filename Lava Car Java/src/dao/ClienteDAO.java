@@ -8,41 +8,39 @@ import database.*;
 
 
 	// INSERT
-	public class CarroDAO {
-	    public int inserir(Carro carro) throws SQLException {
-	        String sql = "INSERT INTO CARRO (idCliente, idModelo, Placa) VALUES (?, ?, ?)";
-	
+	public class ClienteDAO {
+	    public int inserir(Cliente cliente) throws SQLException {
+	        String sql = "INSERT INTO CLIENTE(Nome, WhatsApp, DataCadastro) VALUES (?, ?, CURDATE())";
 	        try (Connection conn = Conexao.getConnection();
 		        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);)  {
-	            stmt.setInt(1, carro.getIdCliente());
-	            stmt.setInt(2, carro.getIdModelo());
-	            stmt.setString(3, carro.getPlaca());
-	
+	            stmt.setString(1, cliente.getNome());
+	            stmt.setString(2, cliente.getWhats());
 	            stmt.executeUpdate();
+	            
 	            ResultSet resultado = stmt.getGeneratedKeys();
 	            if(resultado.next()) {
 	            	return resultado.getInt(1);
 	            }
-	        }
 	        return 0;
+	        }
 	 }
     
     // SELECT
-    public List<Carro> listar() throws SQLException {
-        List<Carro> lista = new ArrayList<>();
-        String sql = "SELECT * FROM CARRO";
+    public List<Cliente> listar() throws SQLException {
+        List<Cliente> lista = new ArrayList<>();
+        String sql = "SELECT * FROM CLIENTE";
 
         try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Carro carro = new Carro();
-                carro.setIdCarro(rs.getInt("id"));
-                carro.setIdModelo(rs.getInt("idModelo"));
-                carro.setIdCliente(rs.getInt("idCliente"));
-                carro.setPlaca(rs.getString("Placa"));
-                lista.add(carro);
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("idCliente"));
+                cliente.setNome(rs.getString("Nome"));
+                cliente.setWhats(rs.getString("WhatsApp"));
+                cliente.setDataCadastro(rs.getDate("DataCadastro"));
+                lista.add(cliente);
             }
         }
 
@@ -50,28 +48,24 @@ import database.*;
     }
 
     // UPDATE
-    public void atualizar(Carro carro) throws SQLException {
-        String sql = "UPDATE CARRO SET idModelo = ?, idCliente = ?, Placa = ? WHERE idCarro = ?";
+    public void atualizar(Cliente cliente) throws SQLException {
+        String sql = "UPDATE CLIENTE SET Nome = ?, WhatsApp = ? WHERE idCliente = ?";
 
         try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-        	stmt.setInt(1, carro.getIdModelo());
-        	stmt.setInt(2, carro.getIdCliente());
-            stmt.setString(3, carro.getPlaca());
-            stmt.setInt(4, carro.getIdCarro());
-
+        	stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getWhats());
+            stmt.setInt(3, cliente.getIdCliente());
             stmt.executeUpdate();
         }
     }
 
     // DELETE
     public void deletar(int id) throws SQLException {
-        String sql = "DELETE FROM CARRO WHERE idCarro = ?";
+        String sql = "DELETE FROM CLIENTE WHERE idCliente = ?";
 
         try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }

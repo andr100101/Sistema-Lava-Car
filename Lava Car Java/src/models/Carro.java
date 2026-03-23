@@ -7,11 +7,8 @@ public class Carro {
 	private String Placa;
 	
 	
-	public Carro(int idCarro, int idModelo, int idCliente, String placa) {
-		this.idCarro = idCarro;
-		this.idModelo = idModelo;
-		this.idCliente = idCliente;
-		Placa = placa;
+	public Carro() {
+		
 	}
 
 
@@ -34,6 +31,25 @@ public class Carro {
 		return Placa;
 	}
 
+
+	public void setIdCarro(int idCarro) {
+		this.idCarro = idCarro;
+	}
+
+
+	public void setIdModelo(int idModelo) {
+		this.idModelo = idModelo;
+	}
+
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+
+	public void setPlaca(String placa) {
+		Placa = placa;
+	}
 	
 }
 
