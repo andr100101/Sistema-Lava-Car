@@ -9,6 +9,7 @@ import database.*;
 
 	// INSERT
 	public class ClienteDAO {
+		
 	    public int inserir(Cliente cliente) throws SQLException {
 	        String sql = "INSERT INTO CLIENTE(Nome, WhatsApp, DataCadastro) VALUES (?, ?, CURDATE())";
 	        try (Connection conn = Conexao.getConnection();
