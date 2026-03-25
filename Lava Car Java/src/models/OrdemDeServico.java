@@ -7,7 +7,7 @@ public class OrdemDeServico {
 	private int idCarro;
 	private int statusOS;
 	private Date dataCadastro;
-	
+
 	public OrdemDeServico() {
 	}
 
@@ -42,12 +42,5 @@ public class OrdemDeServico {
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
-	
-	
-	
-	
-	
+
 }
-
-

@@ -7,7 +7,7 @@ public class ItemOS {
 	private int idOrdemDeServico;
 	private int idServico;
 	private BigDecimal valorCobrado;
-	
+
 	public ItemOS() {
 	}
 
@@ -43,8 +43,4 @@ public class ItemOS {
 		this.valorCobrado = valorCobrado;
 	}
 
-	
-	
-	
-	
 }

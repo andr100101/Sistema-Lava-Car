@@ -4,22 +4,22 @@ public class Modelo {
 	private int idModelo;
 	private int idMarca;
 	private String nome;
-	
+
 	public Modelo() {
 	}
-	
+
 	public int getIdModelo() {
-        return idModelo;
-    }
-	
+		return idModelo;
+	}
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setIdModelo(int idModelo) {
 		this.idModelo = idModelo;
 	}
-	
+
 	public void setIdMarca(int idMarca) {
 		this.idMarca = idMarca;
 	}
@@ -31,6 +31,5 @@ public class Modelo {
 	public int getIdMarca() {
 		return idMarca;
 	}
-	
-	
+
 }
