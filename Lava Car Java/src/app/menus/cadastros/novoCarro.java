@@ -12,10 +12,10 @@ public class novoCarro {
 		Scanner sc = Main.sc;
 		Carro c = new Carro();
 		Marca marcaEscolhida = null;
-		Cliente clienteEscolhido = null;
 		Modelo modeloEscolhido = null;
 		MarcaDAO marcaDAO = new MarcaDAO();
 		CarroDAO carroDAO = new CarroDAO();
+		ClienteDAO clienteDAO = new ClienteDAO();
 		try {
 			List<Marca> marcas = marcaDAO.listar();
 			while (true) {
@@ -47,30 +47,8 @@ public class novoCarro {
 		}
 
 		try {
-			List<Cliente> clientes = ClienteDAO.listar();
-
-			while (true) {
-				System.out.println("Selecione o dono do carro : ");
-				for (Cliente l : clientes) {
-					System.out.println(l.getIdCliente() + "-" + l.getNome());
-				}
-				System.out.println("Digite o ID do dono do carro : ");
-				int idDoCliente = sc.nextInt();
-
-				for (Cliente l : clientes) {
-					if (l.getIdCliente() == idDoCliente) {
-						clienteEscolhido = l;
-
-					}
-				}
-				if (clienteEscolhido != null) {
-					System.out.println("Cliente " + clienteEscolhido.getNome() + " escolhido!");
-					c.setIdCliente(clienteEscolhido.getIdCliente());
-					break;
-				} else {
-					System.out.println("O ID referenciado não está associado à\nnenhum cliente.");
-				}
-			}
+			Cliente clienteSelecionado =  clienteDAO.selecionarCliente();
+			c.setIdCliente(clienteSelecionado.getIdCliente());
 		} catch (SQLException e) {
 			System.out.println("Não foi possível listar os clientes registrados no sistema...");
 		}
@@ -108,9 +86,7 @@ public class novoCarro {
 			System.out.println("Digite a placa do carro");
 			String placaInserida = sc.nextLine().toUpperCase();
 
-			if (!placaInserida.matches("[A-z]{3}-\\d[A-j0-9]\\d{2}")) {
-				System.out.println("Digite uma placa válida no formato ABC1234");
-			} else if (placaInserida.length() != 7) {
+			if (placaInserida.length() != 7) {
 				System.out.println("Digite uma placa válida");
 			} else if (carroDAO.placaExiste(placaInserida)) {
 				System.out.println("Digite uma placa que não tenha sido cadastrada!");

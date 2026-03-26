@@ -14,7 +14,7 @@ public class Cadastros {
 			System.out.println("--CADASTRO--");
 			System.out.println("1 - Novo Cliente");
 			System.out.println("2 - Novo Carro");
-			System.out.println("3 - Atualizar dados");
+			System.out.println("3 - Atualizar cliente");
 			System.out.println("4 - Deletar dados");
 			System.out.println("9 - Voltar");
 
