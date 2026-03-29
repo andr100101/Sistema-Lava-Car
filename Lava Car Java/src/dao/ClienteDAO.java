@@ -28,6 +28,26 @@ public class ClienteDAO {
 		}
 	}
 
+	public static Cliente getCliente(int idCliente) throws SQLException {
+		String sql = "SELECT * FROM CLIENTE WHERE idCliente = ?";
+		try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, idCliente);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				Cliente cliente = new Cliente();
+				cliente.setIdCliente(rs.getInt("idCliente"));
+				cliente.setNome(rs.getString("Nome"));
+				cliente.setWhats(rs.getString("WhatsApp"));
+				cliente.setDataCadastro(rs.getDate("DataCadastro"));
+				return cliente;
+			}
+			return null;
+		} catch (SQLException e) {
+			System.out.println("Erro ao selecionar o cliente" + e);
+			return null;
+		}
+	}
+
 	// SELECT
 	public static List<Cliente> listar() throws SQLException {
 		List<Cliente> lista = new ArrayList<>();
@@ -65,27 +85,38 @@ public class ClienteDAO {
 	// DELETE
 	public void deletar() throws SQLException {
 		Scanner sc = Main.sc;
+		sc.nextLine();
 		String sql = "DELETE FROM CLIENTE WHERE idCliente = ?";
-		
-		Cliente cliente = selecionarCliente();
-		
+
+		Cliente selecionado = selecionarCliente();
+		if (selecionado == null) {
+			return;
+		}
+		sc.nextLine();
 		while (true) {
-			System.out.println("Deseja deletar " + cliente.getNome() + " de fato? (Y/N)");
+			System.out.println("Deseja realmente deletar o cliente " + selecionado.getNome() + "?");
+			System.out.println("Atenção: todos os carros vinculados a esse cliente também serão deletados!");
+			System.out.println("Confirmação (Y/n):");
+
 			String opt = sc.nextLine().toUpperCase();
 			if (opt.equals("Y")) {
 				try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-					stmt.setInt(1, cliente.getIdCliente());
+					stmt.setInt(1, selecionado.getIdCliente());
 					stmt.executeUpdate();
+					System.out
+							.println("Todos os vestigios de " + selecionado.getNome() + " foram excluídos do banco. ");
+					Main.aguardarEnter();
+
 				}
 				break;
-			}else if(!opt.equals("N")) {
+			} else if (!opt.equals("N")) {
 				System.out.println("Digite um valor válido");
 
+			} else {
+				break;
 			}
 		}
 
-		
-		
 	}
 
 	public boolean clienteExiste(String nome) throws SQLException {
@@ -107,21 +138,25 @@ public class ClienteDAO {
 	public Cliente selecionarCliente() throws SQLException {
 		Scanner sc = Main.sc;
 		int pagina = 1;
-		
-		
+
 		List<Cliente> lista;
-		
+
 		try {
 			while (true) {
 				lista = ClienteDAO.listarPorPagina(pagina);
 				int inicio = ((pagina - 1) * 15) + 1;
 				int fim = inicio + lista.size() - 1;
+				if (lista.isEmpty() && pagina == 1) {
+					System.out.println("Não há registros...");
+					Main.aguardarEnter();
+					return null;
+				}
 				if (lista.isEmpty()) {
 					System.out.println("Não há registros nessa página.");
 					pagina--;
 					continue;
 				} else {
-					System.out.println("Selecione o cliente : (" + inicio + "-" + fim);
+					System.out.println("Selecione o cliente : (" + inicio + "-" + fim + ")");
 					for (Cliente i : lista) {
 						System.out.println(i.getIdCliente() + " - " + i.getNome() + " - " + i.getWhats());
 					}
@@ -137,16 +172,16 @@ public class ClienteDAO {
 						return null;
 					} else {
 						try {
-		                    int idCliente = Integer.parseInt(entrada);
-		                    for (Cliente i : lista) {
-		                        if (i.getIdCliente() == idCliente) {
-		                            return i;
-		                        }
-		                    }
-		                    System.out.println("ID não encontrado nesta página.");
-		                } catch (NumberFormatException e) {
-		                    System.out.println("Entrada inválida! Digite um ID numérico.");
-		                }
+							int idCliente = Integer.parseInt(entrada);
+							for (Cliente i : lista) {
+								if (i.getIdCliente() == idCliente) {
+									return i;
+								}
+							}
+							System.out.println("ID não encontrado nesta página.");
+						} catch (NumberFormatException e) {
+							System.out.println("Entrada inválida! Digite um ID numérico.");
+						}
 					}
 
 				}
@@ -179,17 +214,21 @@ public class ClienteDAO {
 			return lista;
 		} catch (SQLException e) {
 			System.out.println("Erro ao listar clientes" + e);
+			Main.aguardarEnter();
 			throw e;
 		}
 
 	}
-	
+
 	public static void atualizarCliente() {
 		ClienteDAO dao = new ClienteDAO();
 		Scanner sc = Main.sc;
 		try {
 			System.out.println("--ATUALIZAR DADOS DE UM CLIENTE--");
 			Cliente clienteSelecionado = dao.selecionarCliente();
+			if (clienteSelecionado == null) {
+				return;
+			}
 			String nome;
 			sc.nextLine();
 			while (true) {
@@ -213,10 +252,13 @@ public class ClienteDAO {
 			}
 			String whats;
 			while (true) {
-				System.out.println("Insira o novo número de WhatsApp de "+ clienteSelecionado.getNome() +" (EX: 42XXXXXXXXX):\nOu deixe em branco para manter o atual (" + clienteSelecionado.getWhats() + ")");
+				System.out.println("Insira o novo número de WhatsApp de " + clienteSelecionado.getNome()
+						+ " (EX: 42XXXXXXXXX):\nOu deixe em branco para manter o atual ("
+						+ clienteSelecionado.getWhats() + ")");
 				whats = sc.nextLine();
 
 				if (whats.isEmpty()) {
+					whats = clienteSelecionado.getWhats();
 					break;
 				}
 				if (!whats.matches("\\d{10,11}")) {
@@ -232,16 +274,16 @@ public class ClienteDAO {
 					System.out.println("Insira um valor válido!\n");
 				}
 			}
-			
-			
+
 			dao.atualizar(clienteSelecionado, nome, whats);
-			System.out.println("Dados de " + clienteSelecionado + " atualizados!");
-				
+			System.out.println("Dados de " + clienteSelecionado.getNome() + " atualizados!");
+			Main.aguardarEnter();
+
 		} catch (SQLException e) {
 			System.out.println("Erro ao abrir o menu de seleção de cliente");
+			Main.aguardarEnter();
 		}
 
 	}
-
 
 }

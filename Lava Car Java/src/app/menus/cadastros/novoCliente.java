@@ -54,6 +54,7 @@ public class novoCliente {
 				break;
 			} else if (!confirm.equalsIgnoreCase("N")) {
 				System.out.println("Insira um valor válido!\n");
+				Main.aguardarEnter();
 			}
 		}
 		ClienteDAO dao = new ClienteDAO();
@@ -62,12 +63,15 @@ public class novoCliente {
 			try {
 				dao.inserir(c);
 				System.out.println("\n\nCliente " + nome + " cadastrado com sucesso!");
+				Main.aguardarEnter();
 			} catch (SQLException e) {
 				System.out.println("Erro ao cadastrar cliente!");
 				e.printStackTrace();
+				Main.aguardarEnter();
 			}
 		} else {
 			System.out.println("Cliente já cadastrado no banco.\nRegistre um novo cliente");
+			Main.aguardarEnter();
 		}
 
 	}

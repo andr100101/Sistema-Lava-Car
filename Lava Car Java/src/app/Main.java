@@ -10,5 +10,13 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 		Inicial.exibir();
 	}
+	
+	public static void aguardarEnter() {
+	    System.out.print("\n[Pressione ENTER para continuar]");
+	    if (sc.hasNextLine()) {
+	        sc.nextLine(); 
+	    }
+	    sc.nextLine(); 
+	}
 
 }

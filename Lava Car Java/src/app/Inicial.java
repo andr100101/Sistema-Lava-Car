@@ -36,7 +36,6 @@ public class Inicial {
 			case 3:
 
 				break;
-
 			case 4:
 
 				break;
@@ -47,7 +46,7 @@ public class Inicial {
 
 			default:
 				System.out.println("Opção inválida.");
-				System.out.println("\n\nPressione enter para continuar...");
+				Main.aguardarEnter();
 
 				sc.nextLine();
 				sc.nextLine();
